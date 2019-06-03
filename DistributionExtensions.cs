@@ -1,8 +1,7 @@
-﻿using System;
-using System.Linq;
-
-namespace Chinchillada.Distributions
+﻿namespace Chinchillada.Distributions
 {
+    using System;
+    using System.Linq;
     using System.Collections.Generic;
 
     /// <summary>
@@ -23,11 +22,5 @@ namespace Chinchillada.Distributions
                 yield return distribution.Sample();
             }
         }
-
-        public static float ExpectedValue<T>(this IDistribution<T>distribution, Func<T,float> function, int sampleSize = 1000) 
-            => distribution.Samples().Take(sampleSize).Select(function).Average();
-
-        public static float ExpectedValue(this IDistribution<float> distribution, int sampleSize = 1000)
-            => distribution.ExpectedValue(x => x, sampleSize);
     }
 }
