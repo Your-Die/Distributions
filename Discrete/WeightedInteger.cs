@@ -7,13 +7,8 @@
 
     public class WeightedInteger : IDiscreteDistribution<int>
     {
-        private readonly IList<int> _weights;
-        private readonly IDiscreteDistribution<int>[] _distributions;
-
-        public static IDiscreteDistribution<int> discreteDistribution(params int[] weights)
-        {
-            return Distribution(weights.AsEnumerable());
-        }
+        private readonly IList<int> weights;
+        private readonly IDiscreteDistribution<int>[] distributions;
 
         public static IDiscreteDistribution<int> Distribution(IEnumerable<int> weightCollection)
         {
@@ -47,19 +42,19 @@
 
         private WeightedInteger(IEnumerable<int> weights)
         {
-            _weights = weights.EnsureList();
-            int sum = _weights.Sum();
-            int count = _weights.Count;
-            _distributions = new IDiscreteDistribution<int>[count];
+            this.weights = weights.EnsureList();
+            var sum = this.weights.Sum();
+            var count = this.weights.Count;
+            this.distributions = new IDiscreteDistribution<int>[count];
 
             // Distribute the weights into 2 dictionaries: one for weights lower than the average, one for weights higher.
             var lows = new Dictionary<int, int>();
             var highs = new Dictionary<int, int>();
-            for (int i = 0; i < count; i++)
+            for (var i = 0; i < count; i++)
             {
-                int weight = _weights[i] * count;
+                var weight = this.weights[i] * count;
                 if (weight == sum)
-                    _distributions[i] = Singleton<int>.Distribution(i);
+                    this.distributions[i] = Singleton<int>.Distribution(i);
                 else if (weight < sum)
                     lows.Add(i, weight);
                 else
@@ -76,15 +71,15 @@
                 highs.Remove(high.Key);
 
                 // Fill up the distribution for the lower weight with values from the higher weight.
-                int lowNeeds = sum - low.Value;
-                _distributions[low.Key] =
+                var lowNeeds = sum - low.Value;
+                this.distributions[low.Key] =
                     Bernoulli.Distribution(low.Value, lowNeeds)
                              .Select(i => i == 0 ? low.Key : high.Key);
 
                 // Put the higher weight back with it's new count.
-                int newHigh = high.Value - lowNeeds;
+                var newHigh = high.Value - lowNeeds;
                 if (newHigh == sum)
-                    _distributions[high.Key] = Singleton<int>.Distribution(high.Key);
+                    this.distributions[high.Key] = Singleton<int>.Distribution(high.Key);
                 else if (newHigh < sum)
                     lows[high.Key] = newHigh;
                 else
@@ -94,19 +89,19 @@
 
         public int Sample()
         {
-            int index = _weights.IndexDistribution().Sample();
-            var distribution = _distributions[index];
+            int index = this.weights.IndexDistribution().Sample();
+            var distribution = this.distributions[index];
             return distribution.Sample();
         }
 
         public IEnumerable<int> Support()
         {
-            return Enumerable.Range(0, _weights.Count).Where(i => _weights[i] != 0);
+            return Enumerable.Range(0, this.weights.Count).Where(i => this.weights[i] != 0);
         }
 
         public int Weight(int variable)
         {
-            return _weights.ElementAtOrDefault(variable);
+            return this.weights.ElementAtOrDefault(variable);
         }
 
         float IWeightedDistribution<int>.Weight(int item)
