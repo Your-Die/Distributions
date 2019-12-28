@@ -45,5 +45,7 @@
         {
             return Flip<bool>.Distribution(true, false, probability);
         }
+
+        public static IWeightedDistribution<int> Binary(float probability) => Flip<int>.Distribution(1, 0, probability);
     }
 }
