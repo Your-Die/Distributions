@@ -27,7 +27,7 @@ namespace Chinchillada.Distributions
         /// <summary>
         /// Generate the <see cref="IWeightedDistribution{T}"/>.
         /// </summary>
-        public IDistribution<T> ToDistribution()
+        public IWeightedDistribution<T> ToDistribution()
         {
             var items = _weights.Keys.ToList();
             var weights = items.Select(item => _weights[item]);
