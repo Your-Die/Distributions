@@ -107,7 +107,7 @@ namespace Chinchillada.Distributions
             int GetWeight(T item) => weightDictionary[item];
             return items.ToWeighted(GetWeight);
         }
-
+        
         public static IDiscreteDistribution<T> ToWeighted<T>(this IEnumerable<T> items, Func<T, int> weightFunction)
         {
             var itemList = items.ToList();
