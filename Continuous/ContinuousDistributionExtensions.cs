@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using Chinchillada.Utilities;
-using Rewired;
+﻿using Chinchillada.Utilities;
 
 namespace Chinchillada.Distributions
 {
@@ -11,7 +9,6 @@ namespace Chinchillada.Distributions
         public static Metropolis<float> NormalMetropolis(this Func<float, float> weight)
         {
             return Metropolis<float>.Distribution(weight, Normal.Standard, NormalAround);
-
         }
 
         public static Func<T, IWeightedDistribution<float>> Posterior<T>(
