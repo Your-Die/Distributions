@@ -1,6 +1,4 @@
-﻿
-using System;
-using System.Linq;
+﻿using System.Linq;
 using Chinchillada.Utilities;
 
 namespace Chinchillada.Distributions

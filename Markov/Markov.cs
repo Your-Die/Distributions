@@ -1,6 +1,4 @@
-﻿using UnityEditor;
-
-namespace Chinchillada.Distributions
+﻿namespace Chinchillada.Distributions
 {
     using System;
     using System.Collections.Generic;
