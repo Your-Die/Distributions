@@ -18,7 +18,7 @@ namespace Chinchillada.Distributions
             var point = Random.Float();
             var curvePoint = this.curve.Evaluate(point);
 
-            return Mathf.Lerp(curvePoint, this.minimum, this.maximum);
+            return Mathf.Lerp(this.minimum, this.maximum, curvePoint);
         }
     }
 }
