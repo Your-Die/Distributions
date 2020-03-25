@@ -17,8 +17,11 @@ namespace Chinchillada.Distributions
 
         public RandomBag(IDictionary<T, float> weightedCollection) => this.collection = weightedCollection;
 
-        public RandomBag(IEnumerable<T> items, Func<T, float> weightFunction)
+        public RandomBag(IEnumerable<T> items, Func<T, float> weightFunction = null)
         {
+            if (weightFunction == null)
+                weightFunction = _ => 1;
+            
             this.collection = items.ToDictionary(
                 item => item,
                 weightFunction);
