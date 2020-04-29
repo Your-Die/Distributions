@@ -128,6 +128,21 @@ namespace Chinchillada.Distributions
             return items.ToWeighted(weights.AsEnumerable());
         }
 
+        public static IDiscreteDistribution<T> ToWeighted<T>(this IEnumerable<(T, int)> weightedItems)
+        {
+            var items = new List<T>();
+            var weights = new List<int>();
+
+            // Split up the tuples.
+            foreach (var (item, weight) in weightedItems)
+            {
+                items.Add(item);
+                weights.Add(weight);
+            }
+
+            return items.ToWeighted(weights);
+        }
+
         public static IDiscreteDistribution<int> IndexDistribution<T>(this IList<T> list)
         {
             return SDU.Distribution(0, list.Count - 1);
