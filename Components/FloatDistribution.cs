@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-using Random = Chinchillada.Utilities.Random;
+using Random = Chinchillada.Foundation.Random;
 
 namespace Chinchillada.Distributions
 {

@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Utilities;
+    using Foundation;
 
     public class WeightedInteger : IDiscreteDistribution<int>
     {
