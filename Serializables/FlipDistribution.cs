@@ -7,7 +7,7 @@ namespace Chinchillada.Distributions.Serializables
     [Serializable]
     public class FlipDistribution<T> : SerializableDistribution<T>
     {
-        [SerializeField, OnValueChanged(nameof(UpdateDistribution))]
+        [SerializeField, Range(0, 1), OnValueChanged(nameof(UpdateDistribution))]
         private float probability = 0.5f;
 
         [SerializeField, OnValueChanged(nameof(UpdateDistribution))]
