@@ -1,0 +1,17 @@
+{
+  "name": "com.chinchillada.distributions",
+  "version": "1.0.0",
+  "displayName": "Chinchillada Distributions",
+  "description": "",
+  "unity": "2020.1",
+  "unityRelease": "6f1",
+  "dependencies": {
+  "com.chinchillada.foundation" : "https://github.com/Your-Die/Foundation.git"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Jordy van Opstal",
+    "email": "jordy_van_opstal@live.nl",
+    "url": "https://jordyvanopstal.com/"
+  }
+}
