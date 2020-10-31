@@ -100,7 +100,7 @@ namespace Chinchillada.Distributions
         }
 
 
-        public static IDiscreteDistribution<T> ToWeighted<T>(this Dictionary<T, int> weightDictionary)
+        public static IDiscreteDistribution<T> ToWeighted<T>(this IDictionary<T, int> weightDictionary)
         {
             var items = weightDictionary.Keys.ToList();
 
@@ -127,7 +127,7 @@ namespace Chinchillada.Distributions
         {
             return items.ToWeighted(weights.AsEnumerable());
         }
-
+        
         public static IDiscreteDistribution<T> ToWeighted<T>(this IEnumerable<(T, int)> weightedItems)
         {
             var items = new List<T>();
