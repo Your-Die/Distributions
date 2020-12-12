@@ -2,11 +2,10 @@
   "name": "com.chinchillada.distributions",
   "version": "1.0.0",
   "displayName": "Chinchillada Distributions",
-  "description": "",
   "unity": "2020.1",
   "unityRelease": "6f1",
   "dependencies": {
-  "com.chinchillada.foundation" : "https://github.com/Your-Die/Foundation.git"
+    "com.chinchillada.foundation": "1.0.0"
   },
   "keywords": [],
   "author": {
