@@ -1,18 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Chinchillada.Distributions.Serializables
 {
     [Serializable]
-    public abstract class SerializableDistribution<T> : IDistribution<T>, ISerializationCallbackReceiver
+    public abstract class SerializableDistribution<T, TDistribution> : IDistribution<T>, ISerializationCallbackReceiver
+        where TDistribution : IDistribution<T>
     {
-        protected IDistribution<T> Distribution { get; private set; }
+        protected TDistribution Distribution { get; private set; }
 
         public T Sample() => this.Distribution.Sample();
 
-        protected abstract IDistribution<T> BuildDistribution();
-        
-        
+        protected abstract TDistribution BuildDistribution();
+
         void ISerializationCallbackReceiver.OnBeforeSerialize()
         {
         }
