@@ -87,11 +87,11 @@
             }
         }
 
-        public int Sample()
+        public int Sample(IRNG random)
         {
-            int index = this.weights.IndexDistribution().Sample();
+            int index = this.weights.IndexDistribution().Sample(random);
             var distribution = this.distributions[index];
-            return distribution.Sample();
+            return distribution.Sample(random);
         }
 
         public IEnumerable<int> Support()

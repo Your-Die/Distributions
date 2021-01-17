@@ -44,9 +44,11 @@ namespace Chinchillada.Distributions
             this.collection.Remove(item);
         }
 
-        public T ChooseRandom()
+        public T ChooseRandom(IRNG rng = null)
         {
-            var random = UnityEngine.Random.Range(0, this.totalWeight);
+            rng ??= UnityRandom.Shared;
+            
+            var random = rng.Range(0, this.totalWeight);
             foreach (var item in this.collection.Keys)
             {
                 var weight = this.collection[item];
@@ -59,15 +61,15 @@ namespace Chinchillada.Distributions
             return this.collection.Keys.Last();
         }
 
-        public T ExtractRandom()
+        public T ExtractRandom(IRNG rng = null)
         {
-            var item = this.ChooseRandom();
+            var item = this.ChooseRandom(rng);
             this.Remove(item);
 
             return item;
         }
 
-        T IDistribution<T>.Sample() => this.ChooseRandom();
+        T IDistribution<T>.Sample(IRNG random) => this.ChooseRandom(random);
 
         public float Weight(T item)
         {

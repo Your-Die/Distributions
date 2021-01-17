@@ -19,9 +19,9 @@ namespace Chinchillada.Distributions
             _standard = SDU.Distribution(0, _support.Count - 1);
         }
 
-        public T Sample()
+        public T Sample(IRNG random)
         {
-            int index = _standard.Sample();
+            int index = _standard.Sample(random);
             return _support[index];
         }
 

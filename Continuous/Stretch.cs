@@ -30,9 +30,9 @@ namespace Chinchillada.Distributions
             _stretch = stretch;
         }
         
-        public float Sample()
+        public float Sample(IRNG random)
         {
-            var sample = _distribution.Sample();
+            var sample = _distribution.Sample(random);
             return sample * _stretch + _shift;
         }
 

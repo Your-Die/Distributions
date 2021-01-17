@@ -4,9 +4,9 @@ namespace Chinchillada.Distributions
 {
     public class Rejection<T> : IWeightedDistribution<T>
     {
-        private readonly Func<T, float> _weightFunction;
-        private readonly IWeightedDistribution<T> _helper;
-        private readonly float _factor;
+        private readonly Func<T, float> weightFunction;
+        private readonly IWeightedDistribution<T> helper;
+        private readonly float factor;
 
         public static IWeightedDistribution<T> Distribution(
             Func<T, float> weightFunction,
@@ -15,25 +15,25 @@ namespace Chinchillada.Distributions
 
         private Rejection(Func<T, float> weightFunction, IWeightedDistribution<T> helper, float factor)
         {
-            _weightFunction = weightFunction;
-            _helper = helper;
-            _factor = factor;
+            this.weightFunction = weightFunction;
+            this.helper         = helper;
+            this.factor         = factor;
         }
 
-        public T Sample()
+        public T Sample(IRNG random)
         {
             while (true)
             {
-                T sample = _helper.Sample();
-                float helperWeight = _helper.Weight(sample) * _factor;
+                var     sample       = this.helper.Sample(random);
+                var helperWeight = this.helper.Weight(sample) * this.factor;
 
-                float weight = this.Weight(sample);
+                var weight = this.Weight(sample);
 
-                if (Flip.Boolean(weight / helperWeight).Sample())
+                if (Flip.Boolean(weight / helperWeight).Sample(random))
                     return sample;
             }
         }
 
-        public float Weight(T item) => _weightFunction(item);
+        public float Weight(T item) => this.weightFunction(item);
     }
 }

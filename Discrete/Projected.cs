@@ -37,9 +37,9 @@ namespace Chinchillada.Distributions
                 .ToDictionary(group => group.Key, group => group.Sum());
         }
 
-        public R Sample()
+        public R Sample(IRNG random)
         {
-            A underlyingSample = _underlying.Sample();
+            A underlyingSample = _underlying.Sample(random);
             return _projection(underlyingSample);
         }
 

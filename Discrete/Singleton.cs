@@ -13,7 +13,7 @@ namespace Chinchillada.Distributions
 
         public static Singleton<T> Distribution(T value) => new Singleton<T>(value);
 
-        public T Sample() => _value;
+        public T Sample(IRNG _) => _value;
 
         public IEnumerable<T> Support()
         {

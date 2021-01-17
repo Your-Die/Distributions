@@ -10,6 +10,6 @@
         /// Sample the distribution.
         /// </summary>
         /// <returns>The sample.</returns>
-        T Sample();
+        T Sample(IRNG random);
     }
 }

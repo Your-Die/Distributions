@@ -7,16 +7,16 @@ namespace Chinchillada.Distributions
 {
     public class Conditioned<T> : IDiscreteDistribution<T>
     {
-        private readonly List<T> _support;
-        private readonly IDiscreteDistribution<T> _underlying;
-        private readonly Func<T, bool> _predicate;
+        private readonly List<T> support;
+        private readonly IDiscreteDistribution<T> underlying;
+        private readonly Func<T, bool> predicate;
 
         public static IDiscreteDistribution<T> Distribution(
             IDiscreteDistribution<T> underlying,
             Func<T, bool> predicate)
         {
             var conditioned = new Conditioned<T>(underlying, predicate);
-            var support = conditioned._support;
+            var support = conditioned.support;
 
             switch (support.Count)
             {
@@ -31,32 +31,32 @@ namespace Chinchillada.Distributions
 
         private Conditioned(IDiscreteDistribution<T> underlying, Func<T, bool> predicate)
         {
-            _underlying = underlying;
-            _predicate = predicate;
-            _support = underlying.Support()
-                .Where(predicate)
-                .ToList();
+            this.underlying = underlying;
+            this.predicate     = predicate;
+            this.support = underlying.Support()
+                                      .Where(predicate)
+                                      .ToList();
         }
 
-        public T Sample()
+        public T Sample(IRNG random)
         {
-            Func<T> sampleFunction = _underlying.Sample;
-            return sampleFunction.Until(_predicate);
+            Func<T> sampleFunction = () => this.underlying.Sample(random);
+            return sampleFunction.Until(this.predicate);
         }
 
         public IEnumerable<T> Support()
         {
-            return _support.AsEnumerable();
+            return this.support.AsEnumerable();
         }
 
         public int Weight(T variable)
         {
-            return _predicate(variable) ? _underlying.Weight(variable) : 0;
+            return this.predicate(variable) ? this.underlying.Weight(variable) : 0;
         }
 
         float IWeightedDistribution<T>.Weight(T item)
         {
-            return Weight(item);
+            return this.Weight(item);
         }
     }
 }

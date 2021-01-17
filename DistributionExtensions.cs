@@ -12,12 +12,13 @@
         /// </summary>
         /// <typeparam name="T">Type of items in this <see cref="IDistribution{T}"/></typeparam>
         /// <param name="distribution">The distribution we're sampling.</param>
+        /// <param name="random"></param>
         /// <returns>The infinite <see cref="IEnumerable{T}"/> of samples.</returns>
-        public static IEnumerable<T> Samples<T>(this IDistribution<T> distribution)
+        public static IEnumerable<T> Samples<T>(this IDistribution<T> distribution, IRNG random)
         {
             while (true)
             {
-                yield return distribution.Sample();
+                yield return distribution.Sample(random);
             }
         }
     }

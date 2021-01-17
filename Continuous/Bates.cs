@@ -31,9 +31,9 @@
         public int SampleCount { get; }
 
         /// <inheritdoc cref="IDistribution{T}"/>
-        public float Sample()
+        public float Sample(IRNG random)
         {
-            return SCU.Distribution.Samples().Take(this.SampleCount).Average();
+            return SCU.Distribution.Samples(random).Take(this.SampleCount).Average();
         }
     }
 }

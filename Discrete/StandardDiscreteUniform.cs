@@ -29,9 +29,9 @@
             return new SDU(minimum, maximum);
         }
 
-        public int Sample()
+        public int Sample(IRNG random)
         {
-            float continuousSample = SCU.Distribution.Sample() * this.Size;
+            float continuousSample = SCU.Distribution.Sample(random) * this.Size;
             return (int) (continuousSample + Minimum);
         }
 

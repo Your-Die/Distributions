@@ -32,9 +32,9 @@ namespace Chinchillada.Distributions
             }
         }
         
-        public T Sample()
+        public T Sample(IRNG random)
         {
-            var randomValue = Random.Range(0, this.weightSum);
+            var randomValue = random.Range(0, this.weightSum);
             foreach (var itemWeightPair in this.weights)
             {
                 randomValue -= itemWeightPair.Value;

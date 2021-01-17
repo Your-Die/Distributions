@@ -10,16 +10,13 @@ namespace Chinchillada.Distributions.Serializables
     {
         protected TDistribution Distribution { get; private set; }
 
-        public T Sample() => this.Distribution.Sample();
-
+        public T Sample(IRNG random) => this.Distribution.Sample(random);
         protected abstract TDistribution BuildDistribution();
 
-        void ISerializationCallbackReceiver.OnBeforeSerialize()
-        {
-        }
+        protected void UpdateDistribution() => this.Distribution = this.BuildDistribution();
+
+        void ISerializationCallbackReceiver.OnBeforeSerialize() { }
 
         void ISerializationCallbackReceiver.OnAfterDeserialize() => this.UpdateDistribution();
-
-        protected void UpdateDistribution() => this.Distribution = this.BuildDistribution();
     }
 }

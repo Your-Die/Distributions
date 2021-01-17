@@ -21,9 +21,9 @@ namespace Chinchillada.Distributions
 
         public static IrwinHall Distribution(int sumCount) => new IrwinHall(sumCount);
 
-        public float Sample()
+        public float Sample(IRNG random)
         {
-            return SCU.Distribution.Samples().Take(this.SampleCount).Sum();
+            return SCU.Distribution.Samples(random).Take(this.SampleCount).Sum();
         }
     }
 }

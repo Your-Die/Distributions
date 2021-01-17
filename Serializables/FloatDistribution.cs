@@ -12,14 +12,13 @@ namespace Chinchillada.Distributions
 
         [SerializeField] private AnimationCurve curve = AnimationCurve.Linear(0, 0, 1, 1);
 
-        [SerializeField] private IRNG random = new UnityRandom();
-
-        public float Sample()
+        public float Sample(IRNG random)
         {
-            var point      = this.random.Float();
+            var point      = random.Float();
             var curvePoint = this.curve.Evaluate(point);
 
             return Mathf.Lerp(this.minimum, this.maximum, curvePoint);
         }
+
     }
 }

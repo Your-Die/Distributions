@@ -10,7 +10,7 @@ namespace Chinchillada.Distributions.Components
 
         private IWeightedDistribution<int> distribution;
         
-        public int Sample() => this.distribution.Sample();
+        public int Sample(IRNG random) => this.distribution.Sample(random);
 
         public float Weight(int item) => this.distribution.Weight(item);
 

@@ -70,7 +70,7 @@
         }
 
         /// <inheritdoc />
-        public int Sample() => SCU.Distribution.Sample() <= this.ZeroChance ? 0 : 1;
+        public int Sample(IRNG random) => SCU.Distribution.Sample(random) <= this.ZeroChance ? 0 : 1;
 
         /// <inheritdoc />
         public IEnumerable<int> Support() => Enumerable.Range(0, 2);

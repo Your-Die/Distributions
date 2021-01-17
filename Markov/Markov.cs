@@ -5,9 +5,9 @@
 
     public sealed class Markov<T> : IDistribution<IEnumerable<T>>
     {
-        private readonly IDistribution<T> _initial;
+        private readonly IDistribution<T> initial;
 
-        private readonly Func<T, IDistribution<T>> _transition;
+        private readonly Func<T, IDistribution<T>> transition;
 
         public static Markov<T> Distribution(IDistribution<T> initial, Func<T, IDistribution<T>> transition)
         {
@@ -16,22 +16,22 @@
 
         private Markov(IDistribution<T> initial, Func<T, IDistribution<T>> transition)
         {
-            _initial = initial;
-            _transition = transition;
+            this.initial    = initial;
+            this.transition = transition;
         }
 
-        public IEnumerable<T> Sample()
+        public IEnumerable<T> Sample(IRNG random)
         {
-            var current = _initial;
+            var current = this.initial;
             while (true)
             {
                 if (current is Empty<T>)
                     break;
 
-                T sample = current.Sample();
+                var sample = current.Sample(random);
                 yield return sample;
 
-                current = _transition(sample);
+                current = this.transition(sample);
             }
         }
     }

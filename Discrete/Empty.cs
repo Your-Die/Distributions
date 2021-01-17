@@ -10,7 +10,7 @@ namespace Chinchillada.Distributions
 
         private Empty() { }
 
-        public T Sample() => throw new Exception("You cannot sample an empty distribution.");
+        public T Sample(IRNG _) => throw new Exception("You cannot sample an empty distribution.");
 
         public IEnumerable<T> Support() => Enumerable.Empty<T>();
 

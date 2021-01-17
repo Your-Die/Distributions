@@ -11,6 +11,6 @@ namespace Chinchillada.Distributions.Components
         
         private void Awake() => this.distribution = DiscreteUniform<int>.Distribution(this.items);
 
-        public int Sample() => this.distribution.Sample();
+        public int Sample(IRNG random) => this.distribution.Sample(random);
     }
 }

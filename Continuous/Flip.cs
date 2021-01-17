@@ -25,7 +25,7 @@
             _probability = probability;
         }
 
-        public T Sample() => SCU.Distribution.Sample() <= _probability ? _head : _tail;
+        public T Sample(IRNG random) => SCU.Distribution.Sample(random) <= _probability ? _head : _tail;
 
         public float Weight(T item)
         {
