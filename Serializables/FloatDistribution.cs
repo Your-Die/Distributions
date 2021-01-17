@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using Random = Chinchillada.Foundation.Random;
 
 namespace Chinchillada.Distributions
 {
@@ -13,9 +12,11 @@ namespace Chinchillada.Distributions
 
         [SerializeField] private AnimationCurve curve = AnimationCurve.Linear(0, 0, 1, 1);
 
+        [SerializeField] private IRNG random = new UnityRandom();
+
         public float Sample()
         {
-            var point = Random.Float();
+            var point      = this.random.Float();
             var curvePoint = this.curve.Evaluate(point);
 
             return Mathf.Lerp(this.minimum, this.maximum, curvePoint);

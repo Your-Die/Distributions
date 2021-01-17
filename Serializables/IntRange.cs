@@ -1,10 +1,11 @@
 using System;
 using Chinchillada.Distributions;
 using UnityEngine;
-using Random = Chinchillada.Foundation.Random;
 
 namespace Distributions.Components
 {
+    using Random = UnityEngine.Random;
+
     [Serializable]
     public class IntRange : IDistribution<int>
     {

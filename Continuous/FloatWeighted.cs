@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using Random = Chinchillada.Foundation.Random;
 
 namespace Chinchillada.Distributions
 {
+    using UnityEngine;
+
     public class FloatWeighted<T> : IWeightedDistribution<T>
     {
         private  readonly IDictionary<T, float> weights;
@@ -33,7 +34,7 @@ namespace Chinchillada.Distributions
         
         public T Sample()
         {
-            var randomValue = Random.Range(this.weightSum);
+            var randomValue = Random.Range(0, this.weightSum);
             foreach (var itemWeightPair in this.weights)
             {
                 randomValue -= itemWeightPair.Value;
