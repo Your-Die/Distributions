@@ -3,6 +3,8 @@ using UnityEngine;
 
 namespace Chinchillada.Distributions
 {
+    using Random = UnityEngine.Random;
+
     [Serializable]
     public class FloatDistribution : IDistribution<float>
     {
@@ -12,11 +14,9 @@ namespace Chinchillada.Distributions
 
         [SerializeField] private AnimationCurve curve = AnimationCurve.Linear(0, 0, 1, 1);
 
-        [SerializeField] private IRNG random = new UnityRandom();
-
         public float Sample()
         {
-            var point      = this.random.Float();
+            var point      = Random.value;
             var curvePoint = this.curve.Evaluate(point);
 
             return Mathf.Lerp(this.minimum, this.maximum, curvePoint);
