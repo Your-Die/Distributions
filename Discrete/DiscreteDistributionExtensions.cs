@@ -4,7 +4,7 @@ namespace Chinchillada.Distributions
 {
     using System;
     using System.Collections.Generic;
-    using Foundation;
+    using Chinchillada;
     using SDU = StandardDiscreteUniform;
 
     public static class DiscreteDistributionExtensions

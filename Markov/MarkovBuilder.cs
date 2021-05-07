@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Chinchillada.Foundation;
+using Chinchillada;
 
 namespace Chinchillada.Distributions
 {
