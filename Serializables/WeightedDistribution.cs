@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using Sirenix.OdinInspector;
-using UnityEngine;
-
-namespace Chinchillada.Distributions.Serializables
+﻿namespace Chinchillada.Distributions
 {
+    using Sirenix.Serialization;
+    using System;
+    using System.Collections.Generic;
+    using Sirenix.OdinInspector;
+
     [Serializable]
-    public class WeightedDistribution<T> : SerializableDistribution<T, IDiscreteDistribution<T>>, IDiscreteDistribution<T>
+    public class WeightedDistribution<T> : SerializableDistribution<T, IDiscreteDistribution<T>>,
+                                           IDiscreteDistribution<T>
     {
-        [SerializeField, OnValueChanged(nameof(UpdateDistribution))]
-        private Dictionary<T, int> weightedItems = new Dictionary<T,int>();
-     
+        [OdinSerialize, OnValueChanged(nameof(UpdateDistribution))]
+        private Dictionary<T, int> weightedItems = new Dictionary<T, int>();
+
         protected override IDiscreteDistribution<T> BuildDistribution() => this.weightedItems.ToWeighted();
         public IEnumerable<T> Support() => this.Distribution.Support();
 

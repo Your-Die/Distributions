@@ -1,8 +1,9 @@
 ﻿namespace Chinchillada.Distributions
 {
-    using UnityEngine;
+    using System;
     using SCU = StandardContinuousUniform;
     
+    [Serializable]
     public class StandardContinuousUniform : IWeightedDistribution<float>
     {
         public static readonly SCU Distribution = new SCU();

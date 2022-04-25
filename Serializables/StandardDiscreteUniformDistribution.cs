@@ -2,11 +2,10 @@ namespace Serializables
 {
     using System;
     using Chinchillada.Distributions;
-    using Chinchillada.Distributions.Serializables;
     using UnityEngine;
 
     [Serializable]
-    public class StandardDiscreteUniformDistribution : SerializableDiscreteDistribution<int>
+    public class StandardDiscreteUniformDistribution : DiscreteSerializableDistribution<int>
     {
         [SerializeField] private int minimum;
         [SerializeField] private int maximum;

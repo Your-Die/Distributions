@@ -1,4 +1,4 @@
-namespace Chinchillada.Distributions.Serializables
+namespace Chinchillada.Distributions
 {
     using Behavior;
     using Sirenix.OdinInspector;
@@ -6,7 +6,7 @@ namespace Chinchillada.Distributions.Serializables
 
     using Distributions;
 
-    public class ConditionedDistribution<T> : SerializableDiscreteDistribution<T>
+    public class ConditionedDistribution<T> : DiscreteSerializableDistribution<T>
     {
         [OdinSerialize, Required] private IDiscreteDistribution<T> underlying;
 

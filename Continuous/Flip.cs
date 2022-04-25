@@ -4,9 +4,9 @@
 
     public class Flip<T> : IWeightedDistribution<T>
     {
-        private readonly T _head;
-        private readonly T _tail;
-        private readonly float _probability;
+        private readonly T head;
+        private readonly T tail;
+        private readonly float probability;
 
         public static IWeightedDistribution<T> Distribution(T head, T tail, float probability)
         {
@@ -20,20 +20,20 @@
 
         private Flip(T head, T tail, float probability)
         {
-            _head = head;
-            _tail = tail;
-            _probability = probability;
+            this.head        = head;
+            this.tail        = tail;
+            this.probability = probability;
         }
 
-        public T Sample(IRNG random) => SCU.Distribution.Sample(random) <= _probability ? _head : _tail;
+        public T Sample(IRNG random) => SCU.Distribution.Sample(random) <= this.probability ? this.head : this.tail;
 
         public float Weight(T item)
         {
-            if (item.Equals(_head))
-                return _probability;
+            if (item.Equals(this.head))
+                return this.probability;
 
-            if (item.Equals(_tail))
-                return 1 - _probability;
+            if (item.Equals(this.tail))
+                return 1 - this.probability;
 
             return 0;
         }

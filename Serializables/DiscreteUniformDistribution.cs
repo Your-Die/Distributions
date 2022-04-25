@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Chinchillada.Distributions.Serializables
+namespace Chinchillada.Distributions
 {
     using Sirenix.Serialization;
 
     [Serializable]
-    public class DiscreteUniformDistribution<T> : SerializableDiscreteDistribution<T>
+    public class DiscreteUniformDistribution<T> : DiscreteSerializableDistribution<T>
     {
         [OdinSerialize, OnValueChanged(nameof(UpdateDistribution))]
         private IReadOnlyList<T> items = new List<T>();

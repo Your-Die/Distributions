@@ -5,7 +5,7 @@ namespace Chinchillada.Distributions
 {
     using System;
     using System.Collections.Generic;
-    using Serializables;
+    using Distributions;
     using Sirenix.OdinInspector;
     using Sirenix.Serialization;
 

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Chinchillada.Distributions
 {
     [Serializable]
-    public class FloatDistribution : IDistribution<float>
+    public class CurveDistribution : IDistribution<float>
     {
         [SerializeField] private float minimum = 0;
 

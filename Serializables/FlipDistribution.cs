@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using Sirenix.OdinInspector;
-using UnityEngine;
-
-namespace Chinchillada.Distributions.Serializables
+﻿namespace Chinchillada.Distributions
 {
+    using System;
+    using Sirenix.OdinInspector;
+    using UnityEngine;
+
     [Serializable]
-    public class FlipDistribution<T> : SerializableDistribution<T, IWeightedDistribution<T>> , IWeightedDistribution<T> 
+    public class FlipDistribution<T> : SerializableDistribution<T, IWeightedDistribution<T>>, IWeightedDistribution<T>
     {
         [SerializeField, Range(0, 1), OnValueChanged(nameof(UpdateDistribution))]
         private float probability = 0.5f;

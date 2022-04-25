@@ -3,8 +3,6 @@ using System.Linq;
 
 namespace Chinchillada.Distributions
 {
-    using UnityEngine;
-
     public class FloatWeighted<T> : IWeightedDistribution<T>
     {
         private  readonly IDictionary<T, float> weights;

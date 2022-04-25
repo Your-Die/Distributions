@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Chinchillada.Distributions.Serializables
+namespace Chinchillada.Distributions
 {
     [Serializable]
     public abstract class SerializableDistribution<TContent, TDistribution>
@@ -24,7 +24,7 @@ namespace Chinchillada.Distributions.Serializables
     }
 
     [Serializable]
-    public abstract class SerializableDiscreteDistribution<T> : SerializableDistribution<T, IDiscreteDistribution<T>>,
+    public abstract class DiscreteSerializableDistribution<T> : SerializableDistribution<T, IDiscreteDistribution<T>>,
                                                                 IDiscreteDistribution<T>
     {
         public IEnumerable<T> Support() => this.Distribution.Support();
@@ -32,5 +32,11 @@ namespace Chinchillada.Distributions.Serializables
         public int Weight(T variable) => this.Distribution.Weight(variable);
 
         float IWeightedDistribution<T>.Weight(T item) => this.Distribution.Weight(item);
+    }
+
+    public abstract class WeightedSerializableDistribution<T> : SerializableDistribution<T, IWeightedDistribution<T>>,
+                                                                IWeightedDistribution<T>
+    {
+        public float Weight(T item) => this.Distribution.Weight(item);
     }
 }

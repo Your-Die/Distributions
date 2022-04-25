@@ -1,27 +1,31 @@
 ﻿namespace Chinchillada.Distributions
 {
+    using System;
     using UnityEngine;
     using SCU = StandardContinuousUniform;
 
+    [Serializable]
     public class Normal : IWeightedDistribution<float>
     {
-        private Normal(float mean, float standardDeviation)
-        {
-            this.Mean              = mean;
-            this.StandardDeviation = standardDeviation;
-        }
+        [SerializeField] private float mean;
 
-        public float Mean { get; }
+        [SerializeField] private float standardDeviation;
 
-        public float StandardDeviation { get; }
+        private static readonly float PiRoot = 1 / Mathf.Sqrt(2 * Mathf.PI);
 
         public static readonly Normal Standard = Distribution(0, 1);
+
+        private Normal(float mean, float standardDeviation)
+        {
+            this.mean              = mean;
+            this.standardDeviation = standardDeviation;
+        }
 
         public static Normal Distribution(float mean, float standardDeviation) => new Normal(mean, standardDeviation);
 
         public float Sample(IRNG random)
         {
-            return this.Mean + this.StandardDeviation * StandardSample(random);
+            return this.mean + this.standardDeviation * StandardSample(random);
         }
 
         private static float StandardSample(IRNG random)
@@ -38,12 +42,10 @@
 
         public float Weight(float variable)
         {
-            var difference = variable - this.Mean;
-            var exponent   = Mathf.Exp(-difference * difference / (2 * this.StandardDeviation));
+            var difference = variable - this.mean;
+            var exponent   = Mathf.Exp(-difference * difference / (2 * this.standardDeviation));
 
-            return exponent * PiRoot / this.StandardDeviation;
+            return exponent * PiRoot / this.standardDeviation;
         }
-
-        private static readonly float PiRoot = 1 / Mathf.Sqrt(2 * Mathf.PI);
     }
 }
