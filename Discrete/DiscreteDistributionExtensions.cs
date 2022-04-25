@@ -44,15 +44,14 @@ namespace Chinchillada.Distributions
                 .Where(totalWeight => totalWeight != 0)
                 .LCM();
             
-            var weights =
-                from a in priorSupport                   // Iterate over support
-                let weight = prior.Weight(a)                // get weight.
-                let probability = likelihood(a)             // Get inner distribution
-                let totalWeight = probability.TotalWeight() // Sum weight of inner distribution
-                from support in probability.Support()       // iterate inner distribution support
-                group weight * probability.Weight(support)  // "Combine Fractions" by multiplication
-                             * lcm / totalWeight
-                    by projection(a, support);
+            var weights = from s in priorSupport                      // Iterate over support
+                          let weight = prior.Weight(s)                // get weight.
+                          let probability = likelihood(s)             // Get inner distribution
+                          let totalWeight = probability.TotalWeight() // Sum weight of inner distribution
+                          from support in probability.Support()       // iterate inner distribution support
+                          group weight * probability.Weight(support)  // "Combine Fractions" by multiplication
+                                       * lcm / totalWeight
+                              by projection(s, support);
 
             var dictionary = weights.ToDictionary(group => group.Key, group => group.Sum());
             return dictionary.Keys.ToWeighted(dictionary.Values);
@@ -80,7 +79,7 @@ namespace Chinchillada.Distributions
             return b => 
                 from a in prior
                 from otherB in likelihood(a)
-                where object.Equals(b, otherB)
+                where Equals(b, otherB)
                 select projection(a, b);
         }
 
@@ -104,8 +103,9 @@ namespace Chinchillada.Distributions
         {
             var items = weightDictionary.Keys.ToList();
 
-            int GetWeight(T item) => weightDictionary[item];
             return items.ToWeighted(GetWeight);
+            
+            int GetWeight(T item) => weightDictionary[item];
         }
         
         public static IDiscreteDistribution<T> ToWeighted<T>(this IEnumerable<T> items, Func<T, int> weightFunction)
@@ -177,14 +177,14 @@ namespace Chinchillada.Distributions
 
             var support = distribution.Support();
             var weightedValues = support.Select(GetWeightedValue);
-            float sum = weightedValues.Sum();
-            int totalWeight = distribution.TotalWeight();
+            var sum = weightedValues.Sum();
+            var totalWeight = distribution.TotalWeight();
 
             return sum / totalWeight;
 
             float GetWeightedValue(float value)
             {
-                int weight = distribution.Weight(value);
+                var weight = distribution.Weight(value);
                 return value * weight;
             }
         }

@@ -7,17 +7,17 @@ namespace Chinchillada.Distributions
 {
     public class Projected<A, R> : IDiscreteDistribution<R>
     {
-        private readonly IDiscreteDistribution<A> _underlying;
+        private readonly IDiscreteDistribution<A> underlying;
 
-        private readonly Func<A, R> _projection;
+        private readonly Func<A, R> projection;
 
-        private readonly Dictionary<R, int> _weights;
+        private readonly Dictionary<R, int> weights;
 
         public static IDiscreteDistribution<R> Distribution(IDiscreteDistribution<A> underlying, Func<A, R> projection)
         {
             var result = new Projected<A, R>(underlying, projection);
 
-            if (result._weights.Count == 0)
+            if (result.weights.Count == 0)
                 return Empty<R>.Distribution();
 
             var support = result.Support().ToList();
@@ -29,26 +29,23 @@ namespace Chinchillada.Distributions
 
         private Projected(IDiscreteDistribution<A> underlying, Func<A, R> projection)
         {
-            _underlying = underlying;
-            _projection = projection;
+            this.underlying = underlying;
+            this.projection = projection;
 
-            _weights = underlying.Support()
-                .GroupBy(projection, underlying.Weight)
-                .ToDictionary(group => group.Key, group => group.Sum());
+            this.weights = underlying.Support()
+                                     .GroupBy(projection, underlying.Weight)
+                                     .ToDictionary(group => group.Key, group => group.Sum());
         }
 
         public R Sample(IRNG random)
         {
-            A underlyingSample = _underlying.Sample(random);
-            return _projection(underlyingSample);
+            var underlyingSample = this.underlying.Sample(random);
+            return this.projection(underlyingSample);
         }
 
-        public IEnumerable<R> Support() => _weights.Keys;
+        public IEnumerable<R> Support() => this.weights.Keys;
 
-        public int Weight(R variable) => _weights.GetValueOrDefault(variable);
-        float IWeightedDistribution<R>.Weight(R item)
-        {
-            return Weight(item);
-        }
+        public int Weight(R variable) => this.weights.GetValueOrDefault(variable);
+        float IWeightedDistribution<R>.Weight(R item) => this.Weight(item);
     }
 }

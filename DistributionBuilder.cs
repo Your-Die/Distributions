@@ -11,17 +11,17 @@ namespace Chinchillada.Distributions
     public sealed class DistributionBuilder<T>
     {
         /// <summary>
-        /// The weights to build the <see cref="IWeightedDistribution{T}"/> with.
+        /// The weightsByItem to build the <see cref="IWeightedDistribution{T}"/> with.
         /// </summary>
-        private readonly Dictionary<T, int> _weights = new Dictionary<T, int>();
+        private readonly Dictionary<T, int> weightsByItem = new Dictionary<T, int>();
 
         /// <summary>
         /// Add the <paramref name="amount"/> as weight for the <paramref name="item"/>.
         /// </summary>
         public void Add(T item, int amount = 1)
         {
-            int weight = _weights.GetValueOrDefault(item);
-            _weights[item] = weight + amount;
+            var weight = this.weightsByItem.GetValueOrDefault(item);
+            this.weightsByItem[item] = weight + amount;
         }
 
         /// <summary>
@@ -29,8 +29,8 @@ namespace Chinchillada.Distributions
         /// </summary>
         public IWeightedDistribution<T> ToDistribution()
         {
-            var items = _weights.Keys.ToList();
-            var weights = items.Select(item => _weights[item]);
+            var items   = this.weightsByItem.Keys.ToList();
+            var weights = items.Select(item => this.weightsByItem[item]);
 
             return items.ToWeighted(weights);
         }

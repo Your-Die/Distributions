@@ -5,18 +5,18 @@
     using SCU = StandardContinuousUniform;
     using SDU = StandardDiscreteUniform;
 
-    public sealed class StandardDiscreteUniform : IDiscreteDistribution<int>
+    public class StandardDiscreteUniform : IDiscreteDistribution<int>
     {
+        public int Minimum { get; }
+        public int Maximum { get; }
+
+        public int Size => 1 + this.Maximum - this.Minimum;
+
         private StandardDiscreteUniform(int minimum, int maximum)
         {
             this.Minimum = minimum;
             this.Maximum = maximum;
         }
-
-        public int Minimum { get; }
-        public int Maximum { get; }
-
-        public int Size => 1 + this.Maximum - this.Minimum;
 
         public static IDiscreteDistribution<int> Distribution(int minimum, int maximum)
         {
@@ -31,8 +31,8 @@
 
         public int Sample(IRNG random)
         {
-            float continuousSample = SCU.Distribution.Sample(random) * this.Size;
-            return (int) (continuousSample + Minimum);
+            var continuousSample = SCU.Distribution.Sample(random) * this.Size;
+            return (int)(continuousSample + this.Minimum);
         }
 
         public IEnumerable<int> Support() => Enumerable.Range(this.Minimum, this.Size);
@@ -46,12 +46,12 @@
 
         float IWeightedDistribution<int>.Weight(int item)
         {
-            return Weight(item);
+            return this.Weight(item);
         }
 
         public override string ToString()
         {
-            return $"Standard Discrete Uniform[{Minimum}, {Maximum}]";
+            return $"Standard Discrete Uniform[{this.Minimum}, {this.Maximum}]";
         }
     }
 }

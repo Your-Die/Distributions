@@ -1,40 +1,36 @@
-﻿using Chinchillada;
-
-namespace Chinchillada.Distributions
+﻿namespace Chinchillada.Distributions
 {
     using System.Collections.Generic;
+    using System.Linq;
     using SDU = StandardDiscreteUniform;
 
     public sealed class DiscreteUniform<T> : IDiscreteDistribution<T>
     {
-        private readonly IDiscreteDistribution<int> _standard;
+        private readonly IDiscreteDistribution<int> standard;
 
-        private readonly IList<T> _support;
+        private readonly IReadOnlyList<T> support;
 
-        public static DiscreteUniform<T> Distribution(IEnumerable<T> items) => new DiscreteUniform<T>(items);
+        public static DiscreteUniform<T> Distribution(IReadOnlyList<T> support) => new DiscreteUniform<T>(support);
 
-        private DiscreteUniform(IEnumerable<T> items)
+        private DiscreteUniform(IReadOnlyList<T> support)
         {
-            _support = items.EnsureList();
-            _standard = SDU.Distribution(0, _support.Count - 1);
+            this.support  = support;
+            this.standard = SDU.Distribution(0, this.support.Count - 1);
         }
 
         public T Sample(IRNG random)
         {
-            int index = _standard.Sample(random);
-            return _support[index];
+            int index = this.standard.Sample(random);
+            return this.support[index];
         }
 
-        public IEnumerable<T> Support() => _support;
+        public IEnumerable<T> Support() => this.support;
 
         public int Weight(T variable)
         {
-            return _support.Contains(variable).ToBinary();
+            return this.support.Contains(variable).ToBinary();
         }
 
-        float IWeightedDistribution<T>.Weight(T item)
-        {
-            return Weight(item);
-        }
+        float IWeightedDistribution<T>.Weight(T item) => this.Weight(item);
     }
 }

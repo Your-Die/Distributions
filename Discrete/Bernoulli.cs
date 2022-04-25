@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
+    using UnityEngine;
     using SCU = StandardContinuousUniform;
 
     /// <summary>
@@ -12,37 +12,30 @@
     public class Bernoulli : IDiscreteDistribution<int>
     {
         /// <summary>
+        /// The amount of zeroes in this <see cref="IDiscreteDistribution{T}"/>.
+        /// </summary>
+        private readonly int zeroes;
+
+        /// <summary>
+        /// The amount of ones in this <see cref="IDiscreteDistribution{T}"/>.
+        /// </summary>
+        private readonly int ones;
+        
+        /// <summary>
+        /// The chance to draw a zero.
+        /// </summary>
+        private float ZeroChance => (float) this.zeroes / (this.zeroes + this.ones);
+        
+        /// <summary>
         /// Construct a new instance of a <see cref="Bernoulli"/> distribution.
         /// </summary>
         /// <param name="zeroes">The amount of zeroes in the distribution.</param>
         /// <param name="ones">The amount of ones in the distribution.</param>
         private Bernoulli(int zeroes, int ones)
         {
-            this.Zeroes = zeroes;
-            this.Ones = ones;
+            this.zeroes = zeroes;
+            this.ones = ones;
         }
-
-        /// <summary>
-        /// The amount of zeroes in this <see cref="IDiscreteDistribution{T}"/>.
-        /// </summary>
-        public int Zeroes { get; }
-        
-        
-        /// <summary>
-        /// The amount of ones in this <see cref="IDiscreteDistribution{T}"/>.
-        /// </summary>
-        public int Ones { get; }
-
-        /// <summary>
-        /// The chance to draw a zero.
-        /// </summary>
-        public float ZeroChance => (float) this.Zeroes / (this.Zeroes + this.Ones);
-
-        
-        /// <summary>
-        /// The chance to draw a one.
-        /// </summary>
-        public float OneChance => 1 - this.ZeroChance;
 
         /// <summary>
         /// Create a bernoulli distribution.
@@ -78,15 +71,12 @@
         /// <inheritdoc />
         public int Weight(int variable)
         {
-            switch (variable)
+            return variable switch
             {
-                case 0:
-                    return this.Zeroes;
-                case 1:
-                    return this.Ones;
-                default:
-                    return 0;
-            }
+                0 => this.zeroes,
+                1 => this.ones,
+                _ => 0
+            };
         }
 
         /// <inheritdoc />

@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace Chinchillada.Distributions
 {
+    [Serializable]
     public class Empty<T> : IDiscreteDistribution<T>
     {
         public static IDiscreteDistribution<T> Distribution() => new Empty<T>();
@@ -15,9 +16,6 @@ namespace Chinchillada.Distributions
         public IEnumerable<T> Support() => Enumerable.Empty<T>();
 
         public int Weight(T variable) => 0;
-        float IWeightedDistribution<T>.Weight(T item)
-        {
-            return Weight(item);
-        }
+        float IWeightedDistribution<T>.Weight(T item) => this.Weight(item);
     }
 }
